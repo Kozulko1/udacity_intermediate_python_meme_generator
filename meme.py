@@ -1,3 +1,5 @@
+"""Module for making a custom meme."""
+
 import os
 import random
 
@@ -11,13 +13,13 @@ def parse_args() -> Namespace:
     """Parse input arguments."""
     parser = ArgumentParser(description="Parse info for meme")
     parser.add_argument("--path", help="Path to an image.", required=False)
-    parser.add_argument("--author", help="Meme author", required=True)
-    parser.add_argument("--body", help="Meme body.", required=True)
+    parser.add_argument("--author", help="Meme author", required=False)
+    parser.add_argument("--body", help="Meme body.", required=False)
     return parser.parse_args()
 
 
 def generate_meme(path=None, body=None, author=None):
-    """Generate a meme given an path and a quote"""
+    """Generate a meme given an path and a quote."""
     img = None
     quote = None
 
@@ -29,7 +31,7 @@ def generate_meme(path=None, body=None, author=None):
 
         img = random.choice(imgs)
     else:
-        img = path
+        img = path[0]
 
     if body is None:
         quote_files = [

@@ -1,3 +1,5 @@
+"""Import from QuoteEngine module."""
+
 from .csv_ingestor import *
 from .docx_ingestor import *
 from .ingestor import *

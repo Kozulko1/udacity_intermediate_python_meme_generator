@@ -1,3 +1,5 @@
+"""Module for a base ingestor."""
+
 from abc import ABC
 from pathlib import Path
 from typing import List

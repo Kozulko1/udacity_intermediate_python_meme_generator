@@ -1,3 +1,5 @@
+"""Module for ingesting all allowed files."""
+
 from pathlib import Path
 from typing import List
 
@@ -19,7 +21,9 @@ class Ingestor(IngestorInterface):
     def parse(cls, path: Path) -> List[QuoteModel]:
         """Parse a .csv, .docx, .pdf or .txt file."""
         if not cls.can_ingest(path):
-            raise NotImplementedError("There are no implemented parsers for provided file type.")
+            raise NotImplementedError(
+                "There are no implemented parsers for provided file type."
+            )
         file_extension = str(path).split(".")[-1]
         if file_extension == "csv":
             return CSVIngestor.parse(path)

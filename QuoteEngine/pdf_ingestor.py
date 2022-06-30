@@ -1,3 +1,5 @@
+"""Module for ingesting pdf files."""
+
 import subprocess
 
 from pathlib import Path
@@ -16,6 +18,7 @@ class PDFIngestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path: Path) -> List[QuoteModel]:
+        """Parse a .pdf file."""
         temp_txt_file = Path("./tmp.txt")
         command = f"pdftotext -layout -nopgbrk {path} {temp_txt_file}"
         subprocess.call(command, shell=True, stderr=subprocess.STDOUT)

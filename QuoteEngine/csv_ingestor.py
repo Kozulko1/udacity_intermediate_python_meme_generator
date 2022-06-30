@@ -1,3 +1,5 @@
+"""Module for ingesting csv files."""
+
 from pandas import read_csv
 from pathlib import Path
 from typing import List
@@ -16,4 +18,6 @@ class CSVIngestor(IngestorInterface):
     def parse(cls, path: Path) -> List[QuoteModel]:
         """Parse a .csv file."""
         file = read_csv(path)
-        return [QuoteModel(**line_content) for _, line_content in file.iterrows()]
+        return [
+            QuoteModel(**line_content) for _, line_content in file.iterrows()
+        ]
