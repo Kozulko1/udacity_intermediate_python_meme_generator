@@ -2,6 +2,7 @@
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from random import randint
+from textwrap import fill as wrap_text
 
 
 __all__ = ["MemeEngine"]
@@ -27,13 +28,15 @@ class MemeEngine:
                 ratio = image.height / image.width
                 height = width * ratio
                 image = image.resize((int(width), int(height)))
-                font_size = int(image.height/20)
+                font_size = int(image.height/25)
                 font = ImageFont.truetype("_data/Fonts/arial.ttf", font_size)
                 image_draw = ImageDraw.Draw(image)
                 x_position = randint(0, int(image.width/4))
                 y_position = randint(0, int(image.height-font_size*2))
+                text = wrap_text(text=text, width=30)
+                lines_count = 1 + text.count("\n")
                 image_draw.text((x_position, y_position), text, font=font)
-                image_draw.text((int(x_position*1.15), y_position+font_size), f" - {author}", font=font)
+                image_draw.text((int(x_position*1.15), y_position+font_size*lines_count*1.25), f" - {author}", font=font)
                 image.save(meme_output)
 
         except FileNotFoundError:
