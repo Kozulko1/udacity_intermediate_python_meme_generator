@@ -24,7 +24,7 @@ def setup():
     ]
     quotes = []
     for quote_file in quote_files:
-        quotes.append(Ingestor.parse(Path(quote_file)))
+        quotes.extend(Ingestor.parse(Path(quote_file)))
     images_path = "./_data/photos/dog/"
     imgs = []
     for file in os.listdir(images_path):
@@ -55,25 +55,22 @@ def meme_form():
 @app.route("/create", methods=["POST"])
 def meme_post():
     """Create a user defined meme"""
-
-    if not request.form.get("image_url"):
-        return render_template('meme_form.html')
-
     image_url = request.form["image_url"]
 
     try:
-        callback = requests.get(image_url, verify=False)
-        temp_file = f'./tmp/{random.randint(0,100000000)}.png'
-        with open(temp_file, 'wb') as filestream:
+        callback = requests.get(image_url, verify=False, stream=True)
+        temp_file = f"./tmp/{random.randint(0,100000000)}.png"
+        with open(temp_file, "wb") as filestream:
             filestream.write(callback.content)
 
     except Exception:
-        return render_template('meme_form.html')
+        return render_template("meme_form.html")
 
     body = request.form["body"]
     author = request.form["author"]
     path = meme.make_meme(temp_file, body, author)
-    Path.unlink(temp_file)
+    if type(temp_file) != str:
+        Path.unlink(temp_file)
     return render_template("meme.html", path=path)
 
 

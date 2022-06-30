@@ -6,7 +6,9 @@ from argparse import ArgumentParser, Namespace
 from MemeEngine import MemeEngine
 from QuoteEngine import Ingestor, QuoteModel
 
+
 def parse_args() -> Namespace:
+    """Parse input arguments."""
     parser = ArgumentParser(description="Parse info for meme")
     parser.add_argument("--path", help="Path to an image.", required=False)
     parser.add_argument("--author", help="Meme author", required=True)
@@ -27,7 +29,7 @@ def generate_meme(path=None, body=None, author=None):
 
         img = random.choice(imgs)
     else:
-        img = path[0]
+        img = path
 
     if body is None:
         quote_files = [
@@ -53,7 +55,4 @@ def generate_meme(path=None, body=None, author=None):
 
 if __name__ == "__main__":
     args = parse_args()
-    print(args.author)
-    print(args.body)
-    print(args.path)
     print(generate_meme(args.path, args.body, args.author))
